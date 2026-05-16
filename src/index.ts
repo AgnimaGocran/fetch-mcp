@@ -135,7 +135,7 @@ function isMainModule(): boolean {
 		const argPath = realpathSync(process.argv[1]);
 		return scriptPath === argPath;
 	} catch {
-		return process.argv[1]?.endsWith('/index.js') || process.argv[1]?.endsWith('/mcp-fetch-server') || false;
+		return process.argv[1]?.endsWith('/index.js') || process.argv[1]?.endsWith('/mcp-fetch-server') || process.argv[1]?.endsWith('/fetch-server') || false;
 	}
 }
 
