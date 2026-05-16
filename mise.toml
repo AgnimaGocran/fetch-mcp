@@ -9,7 +9,7 @@ depends = ["copy-css"]
 run = "bun run build"
 
 [tasks.build-docker]
-run = "docker build -t mcp/fetch-mcp ."
+run = "docker build -t mcp/fetch-http ."
 
 [tasks.start]
 run = "bun run start"

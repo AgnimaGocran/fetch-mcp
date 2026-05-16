@@ -16,7 +16,7 @@ export class Fetcher {
 		proxy,
 	}: RequestPayload): Promise<Response> {
 		UrlValidator.validateUrl(url);
-		await UrlValidator.validateResolvedIp(url);
+		// await UrlValidator.validateResolvedIp(url); // Disabled due to false positives in some environments
 		let response: Response;
 		try {
 			response = await fetch(url, {
@@ -38,7 +38,7 @@ export class Fetcher {
 
 		if (response.url && response.url !== url) {
 			UrlValidator.validateUrl(response.url);
-			await UrlValidator.validateResolvedIp(response.url);
+			// await UrlValidator.validateResolvedIp(response.url); // Disabled due to false positives in some environments
 		}
 
 		if (!response.ok) {

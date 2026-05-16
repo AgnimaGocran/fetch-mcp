@@ -1,12 +1,12 @@
 {
   "mcpServers": {
-    "fetch-mcp": {
+    "fetch-http": {
       "command": "docker",
       "args": [
         "run",
         "-i",
         "--rm",
-        "mcp/fetch-mcp"
+        "mcp/fetch-http"
       ]
     }
   }
