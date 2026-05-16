@@ -10,6 +10,14 @@ An MCP server for fetching web content in multiple formats — HTML, JSON, plain
   <img width="380" height="200" src="https://glama.ai/mcp/servers/nu09wf23ao/badge" alt="Fetch Server MCP server" />
 </a>
 
+## Recent Changes
+
+- **Migrated to MCP SDK v2** - Upgraded from `@modelcontextprotocol/sdk` to `@modelcontextprotocol/server@2.0.0-alpha.2` using the new `McpServer` class and `registerTool` API
+- **Fully migrated to Bun** - Project now uses Bun as the runtime, package manager, test runner, and bundler (completely replacing Node.js/npm)
+- **Code refactoring** - Removed `.js` extensions from imports throughout the codebase for cleaner TypeScript
+- **Zod v4 migration** - Updated to use `z.url()` instead of deprecated `z.string().url()`
+- **Docker build improvements** - Fixed Docker build with `--compile` flag and proper JSDOM runtime dependencies
+
 ## Tools
 
 All tools accept the following common parameters:
@@ -43,92 +51,14 @@ Add to your MCP client configuration:
 ```json
 {
   "mcpServers": {
-    "fetch": {
-      "command": "npx",
-      "args": ["mcp-fetch-server"]
-    }
-  }
-}
-```
-
-### As a CLI
-
-```bash
-npx mcp-fetch <command> <url> [flags]
-```
-
-Or install globally:
-
-```bash
-npm install -g mcp-fetch-server
-mcp-fetch <command> <url> [flags]
-```
-
-## CLI Usage
-
-```
-mcp-fetch <command> <url> [flags]
-```
-
-### Commands
-
-| Command | Description |
-|---------|-------------|
-| `html` | Fetch a URL and return raw HTML |
-| `markdown` | Fetch a URL and return Markdown |
-| `readable` | Fetch a URL and return article content as Markdown (via Readability) |
-| `txt` | Fetch a URL and return plain text |
-| `json` | Fetch a URL and return JSON |
-| `youtube` | Fetch a YouTube video transcript |
-
-### Flags
-
-| Flag | Description |
-|------|-------------|
-| `--max-length <N>` | Maximum characters to return |
-| `--start-index <N>` | Start from this character index |
-| `--proxy <URL>` | Proxy URL |
-| `--lang <code>` | Language code for YouTube transcripts (default: `en`) |
-| `--help` | Show help message |
-| `--version` | Show version |
-
-### Examples
-
-```bash
-# Fetch a page as markdown
-mcp-fetch markdown https://example.com
-
-# Extract article content without boilerplate
-mcp-fetch readable https://example.com/blog/post
-
-# Get a YouTube transcript in Spanish
-mcp-fetch youtube https://www.youtube.com/watch?v=dQw4w9WgXcQ --lang es
-
-# Fetch with a length limit
-mcp-fetch html https://example.com --max-length 10000
-
-# Fetch through a proxy
-mcp-fetch json https://api.example.com/data --proxy http://proxy:8080
-```
-
-## Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `DEFAULT_LIMIT` | Default character limit for responses (default: `5000`, set to `0` for no limit) |
-| `MAX_RESPONSE_BYTES` | Maximum response body size in bytes (default: `10485760` / 10 MB) |
-
-Example with a custom limit:
-
-```json
-{
-  "mcpServers": {
-    "fetch": {
-      "command": "npx",
-      "args": ["mcp-fetch-server"],
-      "env": {
-        "DEFAULT_LIMIT": "50000"
-      }
+    "fetch-http": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/fetch-http"
+      ]
     }
   }
 }
