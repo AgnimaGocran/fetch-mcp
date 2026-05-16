@@ -23,7 +23,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "bun build src/index.ts src/cli.ts --outdir dist --target node --external jsdom --external @mozilla/readability --external turndown",
+    "build": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile dist/fetch-server src/index.ts && bun build --compile --minify-whitespace --minify-syntax --target bun --outfile dist/fetch-cli src/cli/index.ts",
     "prepublishOnly": "bun run build",
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
@@ -31,11 +31,11 @@
     "publish:npm": "bun run build && bun test && npm publish"
   },
   "bin": {
-    "mcp-fetch-server": "dist/index.js",
-    "mcp-fetch": "dist/cli.js"
+    "mcp-fetch-server": "dist/fetch-server",
+    "mcp-fetch": "dist/fetch-cli"
   },
   "engines": {
-    "node": ">=18"
+    "bun": ">=1.0"
   },
   "keywords": [
     "mcp",
@@ -47,8 +47,10 @@
     "transcript"
   ],
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@cfworker/json-schema": "^2.0.0",
+    "@modelcontextprotocol/server": "2.0.0-alpha.2",
     "@mozilla/readability": "^0.6.0",
+    "@types/node": "^25.8.0",
     "jsdom": "^28.1.0",
     "private-ip": "^3.0.2",
     "turndown": "^7.2.2",

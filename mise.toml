@@ -1,0 +1,15 @@
+[tasks.dev]
+run = "bun run dev"
+
+[tasks.copy-css]
+run = "mkdir -p dist && cp node_modules/jsdom/lib/jsdom/browser/default-stylesheet.css dist/"
+
+[tasks.build]
+depends = ["copy-css"]
+run = "bun run build"
+
+[tasks.build-docker]
+run = "docker build -t mcp/fetch-server ."
+
+[tasks.start]
+run = "bun run start"
